@@ -1,3 +1,4 @@
+<?php declare(strict_types = 1); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,8 @@
 <body>
     <?php 
         $dir = scandir(getcwd());
+        echo "<br>".getcwd()."<br>";
+        print_r($dir);
         for ($i=0;$i<count($dir);$i++) {
             $failai = $dir[$i];
             if ($failai == "." || $failai == ".." || $failai == '.git') {
@@ -22,9 +25,14 @@
                     ";
             };
         }
+        // // Panaudoti by referecnce function runMyFunction(&$path);
         function scan_dir() {
             // echo $_GET['click'];
+            // echo getcwd()."'\'".$_GET['click'];
+            echo getcwd()."<br>";
             chdir($_GET['click']);
+            echo getcwd()."<br>";
+            echo "<br>".$_GET['click']."<br>";
             // chdir('js/');
             $dir = scandir(getcwd());
             foreach($dir as $file) {
@@ -41,10 +49,9 @@
                 };
             }
         }
-        function un_set() {
-            $failai = $GLOBALS['failai'];
-            unset($_GET["click"]);
-        }
+        // function un_set() {
+        //     unset($_GET["click"]);
+        // }
         if (isset($_GET["click"])) {
             scan_dir();
             echo "
@@ -53,9 +60,9 @@
                 </form>
                 "; 
         }
-        if (isset($_GET['reset'])) {
-            un_set();
-        }
+        // if (isset($_GET['reset'])) {
+        //     un_set();
+        // }
         ?>
 
 
