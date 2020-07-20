@@ -10,10 +10,10 @@
         $dir = scandir(getcwd());
         for ($i=0;$i<count($dir);$i++) {
             $failai = $dir[$i];
-            if ($failai == "." || $failai == "..") {
+            if ($failai == "." || $failai == ".." || $failai == '.git') {
                 continue;
             } else if ( !is_dir($failai)) {
-                echo "<br>$failai";
+                echo "$failai<br>";
             } else {
                 echo "
                     <form action='' method='get'>
