@@ -1,78 +1,63 @@
-<?php declare(strict_types = 1); ?>
+<?php declare(strict_types = 1);
+    ob_start();
+    // if (isset($_GET['logout'])) {
+    //     session_start();
+    //     unset($_SESSION["username"]);
+    //     unset($_SESSION["password"]);
+   
+    //     echo 'You have cleaned session';
+    //     // header('Refresh: 2; URL = login.php');
+    // }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=\, initial-scale=1.0">
-    <link rel="stylesheet" href="nuPazvengiam.css">
-    <title>File explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
 </head>
 <body>
     <?php 
-        $path = getcwd();
-        $root_path = getcwd();
-        $changeDir = chdir('.');
+        $msg = '';
+            
+        if (isset($_POST['login']) && !empty($_POST['username']) 
+           && !empty($_POST['password'])) {
+            
+           if ($_POST['username'] == 'kekw' && 
+              $_POST['password'] == 'password') {
+                  ob_get_clean();
+                  session_start();
+              $_SESSION['valid'] = true;
+              $_SESSION['timeout'] = time();
+              $_SESSION['username'] = 'kekw';
+              
+              echo 'You have entered valid use name and password';
+              echo "
+                <form action='' method='get'>
+                    <input type='submit' value='Sign out'>
+                    <input type='hidden' name='logout'>
+                </form>
+              ";
+              header("Location: logic.php");
 
-        function scan_dir(&$path) {
-            $getPath = $_GET['path'];
-            if (isset($getPath)) {
-                chdir("$path/$getPath");
-            } else {
-                chdir($path);
-            }
-            $path = getcwd();
-            $dirContent = scandir(getcwd());
-            foreach($dirContent as $files) {
-                if ($files == '.' || $files == '..' || $files == '.git') {
-                    continue;
-                } else if (!is_dir($files)) {
-                    echo "$files<br>";
-                } else {
-                    echo "
-                        <form action='' method='get'>
-                            <input type='submit' value='$files''>
-                            <input type='hidden' name='path' value='$getPath/$files'>
-                        </form>
-                        ";
-                }
+           }else {
+              $msg = 'Wrong username or password';
+              ob_get_clean();
+              echo $msg;
             }
         }
-        // Back to Start
-        function un_set() {
-            unset($_GET["path"]);
-        }
-
-        $getPath = $_GET['path'];
-        // Render back && back to start
-        if (isset($_GET["path"])) {
-                scan_dir($path);
-                $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
-                if ($str == "") {
-                    echo "
-                    <form action='' method='get'>
-                        <input type='submit' name='reset' value='Back to Start'>
-                    </form>
-                    "; 
-                } else {
-                echo "
-                    <form action='' method='get'>
-                        <input type='submit' value='Previous folder'>
-                        <input type='hidden' name='path' value='$str'>
-                    </form>
-                    "; 
-                    echo "
-                    <form action='' method='get'>
-                        <input type='submit' name='reset' value='Back to Start'>
-                    </form>
-                    "; 
-                }
-            } else {
-                scan_dir($root_path);
-        }
-        // Call back to start
-        if (isset($_GET['reset'])) {
-            un_set();
-        }
-        ?>
+    ?>
+    <main class="window">
+        <div class="container">
+            <h1>Sign in</h1>
+            <div class="form">
+            <form action="" method="post">
+                <input type="text" name="username">
+                <input type="password" name="password">
+                <input type="submit" name="login">
+            </form>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
