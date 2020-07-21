@@ -11,20 +11,16 @@
     <?php 
         $path = getcwd();
         $root_path = getcwd();
-        // echo $root_path;
+        $changeDir = chdir('.');
+
         function scan_dir(&$path) {
-            // $root = ""
-            // echo "$path<br>";
             $getPath = $_GET['path'];
-            // echo "<br>GET PATH = $getPath<br>";
             if (isset($getPath)) {
                 chdir("$path/$getPath");
             } else {
                 chdir($path);
             }
-            // echo "<br>".getcwd()."<br>";
             $path = getcwd();
-            // echo "<br>TAS KURI GAVAU IS URLO: $path<br>";
             $dirContent = scandir(getcwd());
             foreach($dirContent as $files) {
                 if ($files == '.' || $files == '..' || $files == '.git') {
@@ -32,46 +28,50 @@
                 } else if (!is_dir($files)) {
                     echo "$files<br>";
                 } else {
-                        // echo "<br>Server URI: ---> ".$_SERVER['REQUEST_URI']."<br>";
-                        // echo "PHP SERVER $ --> ".$_SERVER['PHP_SELF']."<br>";
-                        // echo "PHP NAME $ --> ".$_SERVER['SERVER_NAME']."<br>";
-                        $serverName = $_SERVER['SERVER_NAME'];
-                        $serverURI = $_SERVER['REQUEST_URI'];
-                        $getGood = $serverName.$serverURI;
-
-
                     echo "
                         <form action='' method='get'>
                             <input type='submit' value='$files''>
                             <input type='hidden' name='path' value='$getPath/$files'>
                         </form>
                         ";
-                        // scan_dir($path);
                 }
             }
         }
-
+        // Back to Start
         function un_set() {
             unset($_GET["path"]);
         }
+
+        $getPath = $_GET['path'];
+        // Render back && back to start
         if (isset($_GET["path"])) {
                 scan_dir($path);
+                $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
+                if ($str == "") {
+                    echo "
+                    <form action='' method='get'>
+                        <input type='submit' name='reset' value='Back to Start'>
+                    </form>
+                    "; 
+                } else {
                 echo "
-                <form action='' method='get'>
-                    <input type='submit' name='reset' value='Back'>
-                </form>
-                "; 
+                    <form action='' method='get'>
+                        <input type='submit' value='Previous folder'>
+                        <input type='hidden' name='path' value='$str'>
+                    </form>
+                    "; 
+                    echo "
+                    <form action='' method='get'>
+                        <input type='submit' name='reset' value='Back to Start'>
+                    </form>
+                    "; 
+                }
             } else {
                 scan_dir($root_path);
-            // echo "
-            //     <form action='' method='get'>
-            //         <input type='submit' name='reset' value='Back'>
-            //     </form>
-            //     "; 
         }
+        // Call back to start
         if (isset($_GET['reset'])) {
             un_set();
-            // scan_dir($path);
         }
         ?>
 </body>
