@@ -1,6 +1,4 @@
 <?php declare(strict_types = 1);
-// require_once('index.php');
-// ob_get_clean();
 require_once('logout.php');
 ?>
 <!DOCTYPE html>
@@ -14,9 +12,9 @@ require_once('logout.php');
 <body>
     <?php 
         ob_start();
+        # render directory ::
         $path = getcwd();
         $root_path = getcwd();
-
         function scan_dir(&$path) {
             $getPath = $_GET['path'];
             if (isset($getPath)) {
@@ -27,10 +25,30 @@ require_once('logout.php');
             $path = getcwd();
             $dirContent = scandir(getcwd());
             foreach($dirContent as $files) {
-                if ($files == '.' || $files == '..' || $files == '.git') {
+                if ($files == '.' || $files == '..' || $files == '.git' || $files == "index.php" || $files == "logic.php") {
                     continue;
                 } else if (!is_dir($files)) {
-                    echo "$files<br>";
+                    if (is_readable($files)) {
+                        echo "
+                        <form action='' method='get'>
+                            <input type='submit' value='$files''>
+                            <input type='hidden' name='path' value='$getPath/$files'>
+                        </form>
+                        ";
+                    }
+                    // echo "$files<br>";
+                    // if (is_readable($files)) {
+                    //     $readable = fopen("$getPath/$files", 'r');
+                    //         // $line = fgets("$readable");
+                    //         // echo $line. "<br>";
+                    //         echo "$readable";
+                          
+                          
+                    //     //   fclose($readable);
+                    //     echo "$getPath/$files<br><br>";
+                    // } else {
+                    //     echo $files;
+                    // };
                 } else {
                     echo "
                         <form action='' method='get'>
@@ -41,6 +59,7 @@ require_once('logout.php');
                 }
             }
         }
+        # Render directory END;
         # Render back && back to start
         $getPath = $_GET['path'];
         if (isset($_GET["path"])) {
@@ -69,7 +88,25 @@ require_once('logout.php');
                 scan_dir($root_path);
         }
         # Render back && back to start END;
-
+        // reader
+        function reading($files) {
+            // TODO change files to .txt :: !!
+            if (is_readable($files)) {
+                $file = fopen($files, 'r');
+                $lines = "<div>";
+                // echo fgets($file);
+                while(! feof($file)) {
+                    $lines = $lines.fgets($file);
+                }
+                echo $lines. "<br>";
+            } else {
+                echo "failas<br>";
+            }
+            fclose($file);
+        }
+        
+        // reading('text.txt');
+        reading('index.txt');echo "<br>";
         # Call back to start
         function un_set() {
             unset($_GET["path"]);
