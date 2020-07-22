@@ -19,7 +19,7 @@
         }
         if(empty($errors)==true) {
             move_uploaded_file($file_tmp, $root.$getPath.'/'.$file_name);
-            echo "Success: ".$root.$getPath;
+            // echo "Success: ".$root.$getPath;
         }else{
             print_r($errors);
         }

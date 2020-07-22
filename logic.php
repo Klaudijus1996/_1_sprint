@@ -1,6 +1,7 @@
 <?php declare(strict_types = 1);
 require_once('logout.php');
 require_once('upload.php');
+require_once('download.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +57,6 @@ require_once('upload.php');
                     ob_clean();
                     read($path.$getPath);
                 } 
-              
                 $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
                 if ($str == "") {
                     echo "
@@ -134,5 +134,17 @@ require_once('upload.php');
             </form>
         </div>
         <!-- Upload files :: END :: -->
+        <!-- Download files :: -->
+        <div class="downloads">
+            <form action = "" method = "POST" >
+                <input type = "file" name = "download" style="display: none;" id="img">
+                <button type="button"><label for="img">Choose file?</label></button>
+                <input type = "submit"/>
+            </form>
+            <li>
+                <?php echo $file_type; ?>
+            </li>
+        </div>
+        <!-- Download files :: END :: -->
 </body>
 </html>
