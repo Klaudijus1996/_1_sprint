@@ -66,7 +66,7 @@ require_once('logout.php');
                 } else {
                 echo "
                     <form action='' method='get'>
-                        <input type='submit' value='Previous folder'>
+                        <input type='submit' value='Back'>
                         <input type='hidden' name='path' value='$str'>
                     </form>
                     "; 

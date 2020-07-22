@@ -1,0 +1,81 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+body * {
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body * {
+    display: inline-block;
+}
+
+script {
+    display: none;
+}
+.main {
+    width: 100%;
+    height: 100vh;
+}
+.container {
+    width: 800px;
+    height: 500px;
+    background-color: honeydew;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid silver;
+    border-top: none;
+}
+.head {
+    width: 100%;
+    height: 30px;
+    background-color: royalblue;
+    border: 2px solid lightskyblue;
+}
+.close {
+    width: 25px;
+    height: 25px;
+    background-color: tomato;
+    float: right;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 25px;
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 2px solid orangered;
+    font-weight: 600;
+}
+.close:hover {
+    transition: 0.5s;
+    background-color: orangered;
+}
+.back {
+    width: 25px;
+    height: 25px;
+    background-color: palegreen;
+    text-align: center;
+    line-height: 25px;
+    font-size: larger;
+    color: royalblue;
+    font-weight: bolder;
+    border: 2px solid green;
+    border-radius: 50px;
+    cursor: pointer;
+}
+.path {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    background-color: white;
+    border: 1px solid silver;
+    border-top: none;
+}
+.path>p{
+    margin-left: 10px;
+}
