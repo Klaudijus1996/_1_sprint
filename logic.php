@@ -1,5 +1,6 @@
 <?php declare(strict_types = 1);
 require_once('logout.php');
+require_once('upload.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -125,8 +126,13 @@ require_once('logout.php');
         <?php } 
                 # Create directory && render form END;
         ?>
-        <!-- <form action="" method="get">
-            <input type="submit" name="logout" value="logout">
-        </form> -->
+        <!-- Upload files :: -->
+        <div class="uploads">
+            <form action = "" method = "POST" enctype = "multipart/form-data">
+                <input type = "file" name = "image" />
+                <input type = "submit"/>
+            </form>
+        </div>
+        <!-- Upload files :: END :: -->
 </body>
 </html>
