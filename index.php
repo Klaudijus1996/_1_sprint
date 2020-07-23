@@ -1,16 +1,10 @@
 <?php declare(strict_types = 1);
-    // ob_start();
+    ob_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css">
-    <title>Sign in</title>
-</head>
-<body>
-    <?php 
+    <body>
+        <?php 
         $msg = '';
         
         if (isset($_POST['login']) && !empty($_POST['username']) 
@@ -33,6 +27,12 @@
             }
         }
         ?>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="css/login.css">
+            <title>Sign in</title>
+        </head>
         <main class="window">
             <div class="container">
                 <h1>Sign in</h1>
