@@ -53,6 +53,14 @@ function _sort_entries($a, $b)
                                     </form>
                                 </div>
                                 ";
+                                echo "
+                                <div class='delete'>
+                                    <form action='' method='post'>
+                                        <input class='dlt-btn' type='submit' value='Delete''>
+                                        <input type='hidden' name='delete' value='$getPath/$files'>
+                                    </form>
+                                </div>
+                                ";
                         } else if (is_readable($files)) {
                             echo "
                                 <div class='filesAndFolders'>
@@ -77,17 +85,18 @@ function _sort_entries($a, $b)
                 # Render back && back to start :: START ::
                 $getPath = $_GET['path'];
                 if (isset($_GET["path"])) {
-                        scan_dir($path);
-                        // echo usort(scan_dir($path), "_sort_entries");
-                        if (is_file($path.$getPath)) {
-                            ob_clean();
-                            read($path.$getPath);
-                        } 
+                    scan_dir($path);
+                    // echo usort(scan_dir($path), "_sort_entries");
+                    if (is_file($path.$getPath)) {
+                        ob_clean();
+                        read($path.$getPath);
                         $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
+                        } 
                         if (is_file($path.$_GET['path'])) {
                             echo "
                                 <form class='exit' action='' method='get'>
-                                    <input class='exit-btn' type='submit' name='reset' value='Exit'>
+                                    <input class='exit-btn' type='submit' value='&#215;'>
+                                    <input type='hidden' name='reset' value='reset'>
                                 </form>
                                 ";
                         } else
@@ -100,7 +109,7 @@ function _sort_entries($a, $b)
                         } else {
                         echo "
                             <form class='back' action='' method='get'>
-                                <input class='back-btn' type='submit' value='Back'>
+                                <input class='back-btn' type='submit' value='&#8249;'>
                                 <input type='hidden' name='path' value='$str'>
                             </form>
                             "; 
@@ -136,39 +145,67 @@ function _sort_entries($a, $b)
                     un_set();
                 }
                 # Call back to start :: END :: ;
+                # Delete dir :: START ::
+                if (isset($_POST['delete'])) {
+                    deleteDir($root_path.'/'.$_POST['delete']);
+                    ob_get_clean();
+                    scan_dir($path);
+                    $del = $_POST['delete'];
+                    $str = substr($del, strripos($del, '/'), strlen($del)-1);
+                    echo "
+                            <form class='back' action='' method='get'>
+                                <input class='back-btn' type='submit' value='&#8249;'>
+                                <input type='hidden' name='path' value=''>
+                            </form>
+                            "; 
+                }
+                function deleteDir($dir) {
+                    if (is_dir($dir)) {
+                        rmdir($dir);
+                    }
+                } 
+                # Delete dir :: END :: ;
                 // ---------------------------------------------------------
                 # Create directory && render form ::
                 function createDirectory() { 
                     $add = $_POST["add"]; 
+
                     mkdir($add); 
                 }
                 ?>
-            <?php if(!isset($_POST['submit'])) { ?>
-                <form class="create-folder" action="" method="post">
-                    <input class="input-text" type="text" name="add" placeholder="Name your folder">
-                    <input class="input-btn" type="submit" value="Create folder">
-                    <input type="hidden" name ='submit'>
-                </form>
-            <?php } else {
-                createDirectory();
-                ob_get_clean();
-                scan_dir($root_path);
-            ?>
-            <form class="create-folder" action="" method="post">
-                    <input class="input-text" type="text" name="add" placeholder="Name your folder">
-                    <input class="input-btn" type="submit" value="Create folder">
-                    <input type="hidden" name ='submit'>
-                </form>
-            <?php } 
-            # Create directory && render form :: END :: ;
-            ?>
-            <!-- Upload files :: -->
-            <div class="uploads">
-                <form action = "" method = "POST" enctype = "multipart/form-data">
-                    <input type = "file" name = "image" />
-                    <input type = "submit"/>
-                </form>
-            </div>
+                 <?php if(!isset($_POST['submit'])) { ?>
+                    <div class="createDir">
+                        <form class="create-folder" action="" method="post">
+                            <input class="input-text" type="text" name="add" placeholder="Folder">
+                            <input class="input-btn" type="submit" value="&#43;">
+                            <input type="hidden" name ='submit'>
+                        </form>
+                    </div>
+                <?php } else {
+                    createDirectory();
+                    ob_get_clean();
+                    scan_dir($root_path);
+                ?>
+                    <div class="createDir">
+                        <form class="create-folder" action="" method="post">
+                            <input class="input-text" type="text" name="add" placeholder="Folder">
+                            <input class="input-btn" type="submit" value="&#43;">
+                            <input type="hidden" name ='submit'>
+                        </form>
+                    </div>
+                <?php } 
+                # Create directory && render form :: END :: ;
+                ?>
+                <!-- Upload files :: -->
+                <div class="uploads">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image" id="img" style="display:none;"/>
+                        <button class="ch-btn" type="button">
+                            <label class="btn-label" for="img">Choose file</label>
+                        </button>
+                        <button class="up-btn" type="submit">Upload file</button>
+                    </form>
+                </div>
             <!-- Upload files :: END :: -->
         </div>
     </main>

@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php 
     ob_start();
     if (isset($_GET['logout'])) {
         session_start();
@@ -9,9 +9,11 @@
         header('Location: index.php');
     } else {
         echo "
-        <form action='' method='get'>
-            <input type='submit' name='logout' value='logout'>
-        </form>
+        <div class='logout'>
+            <form action='' method='get'>
+                <input class='logout-btn' type='submit' name='logout' value='Log out'>
+            </form>
+        </div>
         ";
     }
 
