@@ -28,5 +28,5 @@ if(isset($_POST['download'])){
     // readfile($fileToDownloadEscaped);
     exit;
 }
-
+echo "AHAHAHAHA: $fileToDownloadEscaped";
 ?>
