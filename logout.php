@@ -1,5 +1,4 @@
 <?php 
-    ob_start();
     if (isset($_GET['logout'])) {
         session_start();
         unset($_SESSION["username"]);
@@ -16,7 +15,4 @@
         </div>
         ";
     }
-
-
-
 ?>

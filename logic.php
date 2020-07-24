@@ -18,13 +18,14 @@ function _sort_entries($a, $b)
 <body>
     <main class="main">
         <?php 
-        require_once('logout.php');
+        // require_once('logout.php');
         require_once('upload.php');
         require_once('download.php');
         ?>
         <div class="bg-img"></div>
         <div class="container">
             <div class="head"></div>
+            <?php require_once('logout.php'); ?>
             <?php 
                 ob_start();
                 # Render Files/Folders :: START ::
@@ -84,13 +85,15 @@ function _sort_entries($a, $b)
                 # Render Files/Folders :: END :: ;
                 # Render back && back to start :: START ::
                 $getPath = $_GET['path'];
-                if (isset($_GET["path"])) {
-                    scan_dir($path);
+                if (isset($_GET["path"])) { ?> 
+                <div class='files-container scrollbar' id="style-13"> <?php
+                    scan_dir($path); ?>
+                </div> <?php
                     // echo usort(scan_dir($path), "_sort_entries");
+                    $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
                     if (is_file($path.$getPath)) {
                         ob_clean();
                         read($path.$getPath);
-                        $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
                         } 
                         if (is_file($path.$_GET['path'])) {
                             echo "
@@ -120,11 +123,23 @@ function _sort_entries($a, $b)
                             "; 
                         }
                     } else {
-                        scan_dir($root_path);
+                        ?>
+                    <div class="files-container scrollbar" id="style-13"> <?php
+                        scan_dir($root_path); ?>
+                    </div> <?php
                 }
                 # Render back && back to start :: END :: ;
                 # Render file content :: START ::
                 function read($file) {
+                    // $img = imagecreatefromjpeg($file);
+                    // if ($img) {
+                    //     header("Content-type: image/jpg");
+                    //     // imagejpeg($img);
+                    //     $showImg = imagejpeg($img);
+                    //     echo "
+                    //     <div class='jpg'>$showImg</div>
+                    // ";
+                    // }
                     if (is_readable($file)) {
                         echo "<div class='renderFile' id=''style-13'>
                                 <div class='scrollbar' id='style-13'>
@@ -133,7 +148,13 @@ function _sort_entries($a, $b)
                             </div>";
                             
                     } else {
-                        return null;
+                        // return null;
+                        $img = imagecreatefromjpeg($file);
+                        header("Content-type: image/jpeg");
+                        $imgShow = imagejpeg($img);
+                        echo "
+                            <div class='jpg'>$imgShow</div>
+                        ";
                     }
                 }
                 # Render file content :: END :: ;

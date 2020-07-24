@@ -10,13 +10,13 @@
         if (isset($_POST['login']) && !empty($_POST['username']) 
         && !empty($_POST['password'])) {
             
-            if ($_POST['username'] == 'kekw' && 
+            if ($_POST['username'] == 'name' && 
             $_POST['password'] == 'password') {
                 ob_get_clean();
                 session_start();
                 $_SESSION['valid'] = true;
                 $_SESSION['timeout'] = time();
-                $_SESSION['username'] = 'kekw';
+                $_SESSION['username'] = 'name';
                 
                 header("Location: logic.php"); 
             } else {
