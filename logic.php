@@ -40,8 +40,6 @@ function _sort_entries($a, $b)
                     }
                     $path = getcwd();
                     $dirContent = scandir(getcwd());
-                    // usort($dirContent, "_sort_entries");
-                    // $dl = $_POST['download'];
                     foreach($dirContent as $files) {
                         if ($files == '.' || $files == '..' || $files == '.git') {
                             continue;
@@ -99,7 +97,7 @@ function _sort_entries($a, $b)
                             echo "
                                 <form class='exit' action='' method='get'>
                                     <input class='exit-btn' type='submit' value='&#215;'>
-                                    <input type='hidden' name='reset' value='reset'>
+                                    <input type='hidden' name='path' value='$str'>
                                 </form>
                                 ";
                         } else

@@ -5,8 +5,6 @@
 <html lang="en">
     <body>
         <?php 
-        $msg = '';
-        
         if (isset($_POST['login']) && !empty($_POST['username']) 
         && !empty($_POST['password'])) {
             
@@ -45,6 +43,5 @@
                 </div>
             </div>
         </main>
-    <!-- </main> -->
 </body>
 </html>
