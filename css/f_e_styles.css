@@ -236,6 +236,15 @@ script {
     bottom: 0px;
     left: 0px;
 }
+.upload-error {
+    /* color: #fff; */
+    color: red;
+    position: absolute;
+    bottom: 26%;
+    left: 36%;
+    transform: translate(-36%);
+    z-index: 2;
+}
 .ch-btn {
     border-color: #FFB95E;
     border-radius: 10px;
