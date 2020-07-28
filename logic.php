@@ -18,7 +18,6 @@ function _sort_entries($a, $b)
 <body>
     <main class="main">
         <?php 
-        // require_once('logout.php');
         require_once('upload.php');
         require_once('download.php');
         ?>
@@ -42,6 +41,7 @@ function _sort_entries($a, $b)
                     $path = getcwd();
                     $dirContent = scandir(getcwd());
                     // usort($dirContent, "_sort_entries");
+                    // $dl = $_POST['download'];
                     foreach($dirContent as $files) {
                         if ($files == '.' || $files == '..' || $files == '.git') {
                             continue;
@@ -75,7 +75,7 @@ function _sort_entries($a, $b)
                                 <div class='downloads'>
                                     <form action='' method='post'>
                                         <input class='download' type='submit' value='download'>
-                                        <input type='hidden' name='download' value='$getPath/$files'>
+                                        <input type='hidden' name='download' value='$getPath\\$files'>
                                     </form>
                                 </div>
                                 ";
@@ -131,15 +131,22 @@ function _sort_entries($a, $b)
                 # Render back && back to start :: END :: ;
                 # Render file content :: START ::
                 function read($file) {
+                    // echo $file.'<br>';
+                    // $fix = substr($file, strripos($file, '/')+1, strlen($file)-1);
+                    // echo "$fix<br>";
+                    // echo $_GET['path'].'<br>';
+                    // echo stripos($_GET['path'], '/');
+                    // exit;
+                    // $fix2 = substr($_GET['path'], stripos($_GET['path'], '/')+1, strlen($_GET['path'])-1);
                     // $img = imagecreatefromjpeg($file);
-                    // if ($img) {
-                    //     header("Content-type: image/jpg");
-                    //     // imagejpeg($img);
-                    //     $showImg = imagejpeg($img);
-                    //     echo "
-                    //     <div class='jpg'>$showImg</div>
-                    // ";
-                    // }
+                    // if (exif_imagetype($file) == IMAGETYPE_JPEG) {
+                    //     echo "$fix2<br>";
+                    //     exit;
+                    //     $im = imagecreatefromjpeg("$fix2");
+                    //     header('Content-type: image/jpg');
+                    //     imagejpeg($im);
+                    //     imagedestroy($im);
+                    // };
                     if (is_readable($file)) {
                         echo "<div class='renderFile' id=''style-13'>
                                 <div class='scrollbar' id='style-13'>
@@ -147,14 +154,6 @@ function _sort_entries($a, $b)
                                 </div>
                             </div>";
                             
-                    } else {
-                        // return null;
-                        $img = imagecreatefromjpeg($file);
-                        header("Content-type: image/jpeg");
-                        $imgShow = imagejpeg($img);
-                        echo "
-                            <div class='jpg'>$imgShow</div>
-                        ";
                     }
                 }
                 # Render file content :: END :: ;
