@@ -91,7 +91,9 @@ function _sort_entries($a, $b)
                     $str = substr($getPath, stripos($getPath, '/'), strripos($getPath, '/'));
                     if (is_file($path.$getPath)) {
                         ob_clean();
-                        read($path.$getPath);
+                        $fullPath = $path.$getPath;
+                        // $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($fullPath, null, 'utf-8'));
+                        read($fullPath);
                         } 
                         if (is_file($path.$_GET['path'])) {
                             echo "
@@ -129,22 +131,12 @@ function _sort_entries($a, $b)
                 # Render back && back to start :: END :: ;
                 # Render file content :: START ::
                 function read($file) {
-                    // echo $file.'<br>';
-                    // $fix = substr($file, strripos($file, '/')+1, strlen($file)-1);
-                    // echo "$fix<br>";
-                    // echo $_GET['path'].'<br>';
-                    // echo stripos($_GET['path'], '/');
-                    // exit;
-                    // $fix2 = substr($_GET['path'], stripos($_GET['path'], '/')+1, strlen($_GET['path'])-1);
-                    // $img = imagecreatefromjpeg($file);
-                    // if (exif_imagetype($file) == IMAGETYPE_JPEG) {
-                    //     echo "$fix2<br>";
-                    //     exit;
-                    //     $im = imagecreatefromjpeg("$fix2");
-                    //     header('Content-type: image/jpg');
-                    //     imagejpeg($im);
-                    //     imagedestroy($im);
-                    // };
+                    $fix2 = substr($_GET['path'], stripos($_GET['path'], '/')+1, strlen($_GET['path'])-1);
+                    if (exif_imagetype($file) == IMAGETYPE_JPEG || exif_imagetype($file) == IMAGETYPE_PNG
+                    ) {
+                        echo "<img src='$fix2'>";
+                        exit;
+                    };
                     if (is_readable($file)) {
                         echo "<div class='renderFile' id=''style-13'>
                                 <div class='scrollbar' id='style-13'>
